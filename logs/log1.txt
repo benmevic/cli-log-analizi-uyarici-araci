@@ -1,0 +1,17 @@
+# --- SSH Brute Force Simülasyonu ---
+Apr 23 21:40:01 kali sshd[1234]: Invalid user admin from 192.168.1.50 port 54322 ssh2
+Apr 23 21:40:03 kali sshd[1234]: pam_unix(sshd:auth): authentication failure; logname= uid=0 euid=0 tty=ssh ruser= rhost=192.168.1.50  user=admin
+Apr 23 21:40:05 kali sshd[1235]: Invalid user guest from 192.168.1.50 port 54324 ssh2
+Apr 23 21:40:08 kali sshd[1236]: Invalid user support from 192.168.1.50 port 54326 ssh2
+Apr 23 21:40:10 kali sshd[1237]: Accepted password for meric from 192.168.1.10 port 49200 ssh2
+
+# --- Web Saldırı Denemeleri (Apache Access Log) ---
+127.0.0.1 - - [23/Apr/2026:21:45:12 +0300] "GET /index.php?id=1' OR '1'='1 HTTP/1.1" 200 1543 "-" "Mozilla/5.0"
+127.0.0.1 - - [23/Apr/2026:21:45:15 +0300] "GET /search.php?q=<script>alert('XSS')</script> HTTP/1.1" 200 850 "-" "Mozilla/5.0"
+192.168.1.105 - - [23/Apr/2026:21:46:01 +0300] "POST /login.php HTTP/1.1" 401 532 "-" "Hydra/9.5"
+192.168.1.105 - - [23/Apr/2026:21:46:02 +0300] "POST /login.php HTTP/1.1" 401 532 "-" "Hydra/9.5"
+192.168.1.105 - - [23/Apr/2026:21:46:03 +0300] "POST /login.php HTTP/1.1" 302 0 "-" "Hydra/9.5"
+
+# --- Sistem Yetki Yükseltme (Privilege Escalation) ---
+Apr 23 21:50:44 kali sudo:   meric : TTY=pts/0 ; PWD=/home/meric ; USER=root ; COMMAND=/usr/bin/apt update
+Apr 23 21:55:12 kali groupadd[2940]: group added to /etc/group: name=backdoor, GID=1001

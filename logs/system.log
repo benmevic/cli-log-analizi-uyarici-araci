@@ -1,0 +1,16 @@
+Apr 24 07:00:01 server kernel: usb 1-1: new USB device found, idVendor=0781, idProduct=5567
+Apr 24 07:00:02 server kernel: usb 1-1: USB disconnect, device number 3
+Apr 24 07:05:00 server kernel: Out of memory: Kill process 4521 (java) score 900 or sacrifice child
+Apr 24 07:05:01 server kernel: Killed process 4521 (java) total-vm:2048000kB, anon-rss:1024000kB
+Apr 24 07:10:00 server systemd[1]: error: Failed to start MySQL Database Server
+Apr 24 07:10:05 server mysqld: error: Can't connect to local MySQL server through socket
+Apr 24 07:15:00 server kernel: EXT4-fs error (device sda1): ext4_find_entry: disk full
+Apr 24 07:20:00 server kernel: panic - not syncing: VFS: Unable to mount root fs on unknown-block
+Apr 24 08:00:00 server systemd[1]: error: nginx.service failed
+Apr 24 08:00:05 server nginx: error: bind() to 0.0.0.0:80 failed (98: Address already in use)
+Apr 24 08:30:00 server ufw block: IN=eth0 OUT= MAC=... SRC=45.33.32.156 DST=192.168.1.1 PROTO=TCP DPT=22
+Apr 24 08:30:05 server ufw block: IN=eth0 OUT= MAC=... SRC=185.220.101.5 DST=192.168.1.1 PROTO=TCP DPT=3306
+Apr 24 09:00:00 server bash: command not found: nmap
+Apr 24 09:05:00 server kernel: usb 2-1: new high-speed USB device number 4 using xhci_hcd
+Apr 24 10:00:00 server kernel: Out of memory: Kill process 8821 (python3) score 850 or sacrifice child
+Apr 24 10:05:00 server systemd[1]: error: docker.service failed to start

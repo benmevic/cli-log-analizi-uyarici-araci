@@ -1,27 +1,99 @@
 {
-    "rules": [
-        {"keyword": "failed password", "label": "SSH: Basarisiz Giris Denemesi", "kategori": "KRITIK"},
-        {"keyword": "accepted password", "label": "SSH: Basarili Giris", "kategori": "GUVENLIK"},
-        {"keyword": "sudo: auth failure", "label": "YETKI: Hatali Sudo Denemesi", "kategori": "KRITIK"},
-        {"keyword": "command not found", "label": "SISTEM: Bilinmeyen Komut", "kategori": "BILGI"},
-        
-        {"keyword": "union select", "label": "WEB: SQL Injection Saldirisi", "kategori": "KRITIK"},
-        {"keyword": "union all select", "label": "WEB: SQL Injection Saldirisi", "kategori": "KRITIK"},
-        {"keyword": "<script>", "label": "WEB: XSS Saldiri Girisimi", "kategori": "KRITIK"},
-        {"keyword": "../", "label": "WEB: Directory Traversal Denemesi", "kategori": "KRITIK"},
-        
-        {"keyword": "404", "label": "WEB: Sayfa Bulunamadi (Tarama?)", "kategori": "BILGI"},
-        {"keyword": "500", "label": "WEB: Sunucu Hatasi", "kategori": "HATA"},
-        {"keyword": "403", "label": "WEB: Yasaklı Erişimi", "kategori": "HATA"},
-        
-        {"keyword": "error", "label": "GENEL: Sistem Hatasi", "kategori": "HATA"},
-        {"keyword": "panic", "label": "KRITIK: Kernel Panigi", "kategori": "KRITIK"},
-        {"keyword": "out of memory", "label": "KAYNAK: Bellek Yetersiz", "kategori": "HATA"},
-        {"keyword": "disk full", "label": "KAYNAK: Disk Dolu", "kategori": "KRITIK"},
-        
-        {"keyword": "nmap", "label": "GÜVENLİK: Port Tarama Tespit Edildi", "kategori": "GUVENLIK"},
-        {"keyword": "sqlmap", "label": "GÜVENLİK: SQLMap Aracı Tespit Edildi", "kategori": "KRITIK"},
-        {"keyword": "ufw block", "label": "FIREWALL: Engellenen Baglanti", "kategori": "GUVENLIK"},
-        {"keyword": "usb", "label": "DONANIM: Yeni USB Cihaz Takildi", "kategori": "BILGI"}
-    ]
+  "rules": [
+    {
+      "keyword": "failed password",
+      "label": "SSH: Basarisiz Giris Denemesi",
+      "kategori": "KRITIK"
+    },
+    {
+      "keyword": "accepted password",
+      "label": "SSH: Basarili Giris",
+      "kategori": "GUVENLIK"
+    },
+    {
+      "keyword": "sudo: auth failure",
+      "label": "YETKI: Hatali Sudo Denemesi",
+      "kategori": "KRITIK"
+    },
+    {
+      "keyword": "command not found",
+      "label": "SISTEM: Bilinmeyen Komut",
+      "kategori": "BILGI"
+    },
+    {
+      "keyword": "union select",
+      "label": "WEB: SQL Injection Saldirisi",
+      "kategori": "KRITIK"
+    },
+    {
+      "keyword": "union all select",
+      "label": "WEB: SQL Injection Saldirisi",
+      "kategori": "KRITIK"
+    },
+    {
+      "keyword": "<script>",
+      "label": "WEB: XSS Saldiri Girisimi",
+      "kategori": "KRITIK"
+    },
+    {
+      "keyword": "../",
+      "label": "WEB: Directory Traversal Denemesi",
+      "kategori": "KRITIK"
+    },
+    {
+      "keyword": "404",
+      "label": "WEB: Sayfa Bulunamadi (Tarama?)",
+      "kategori": "BILGI"
+    },
+    {
+      "keyword": "500",
+      "label": "WEB: Sunucu Hatasi",
+      "kategori": "HATA"
+    },
+    {
+      "keyword": "403",
+      "label": "WEB: Yasakli Erisim",
+      "kategori": "HATA"
+    },
+    {
+      "keyword": "error",
+      "label": "GENEL: Sistem Hatasi",
+      "kategori": "HATA"
+    },
+    {
+      "keyword": "panic",
+      "label": "KRITIK: Kernel Panigi",
+      "kategori": "KRITIK"
+    },
+    {
+      "keyword": "out of memory",
+      "label": "KAYNAK: Bellek Yetersiz",
+      "kategori": "HATA"
+    },
+    {
+      "keyword": "disk full",
+      "label": "KAYNAK: Disk Dolu",
+      "kategori": "KRITIK"
+    },
+    {
+      "keyword": "nmap",
+      "label": "GUVENLIK: Port Tarama Tespit Edildi",
+      "kategori": "GUVENLIK"
+    },
+    {
+      "keyword": "sqlmap",
+      "label": "GUVENLIK: SQLMap Araci Tespit Edildi",
+      "kategori": "KRITIK"
+    },
+    {
+      "keyword": "ufw block",
+      "label": "FIREWALL: Engellenen Baglanti",
+      "kategori": "GUVENLIK"
+    },
+    {
+      "keyword": "usb",
+      "label": "DONANIM: Yeni USB Cihaz Takildi",
+      "kategori": "BILGI"
+    }
+  ]
 }

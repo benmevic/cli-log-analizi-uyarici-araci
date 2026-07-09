@@ -1,0 +1,15 @@
+Apr 24 08:01:12 server sshd[1234]: Failed password for root from 192.168.1.105 port 22 ssh2
+Apr 24 08:01:15 server sshd[1234]: Failed password for root from 192.168.1.105 port 22 ssh2
+Apr 24 08:01:18 server sshd[1234]: Failed password for admin from 10.0.0.44 port 22 ssh2
+Apr 24 08:02:00 server sshd[1235]: Accepted password for deploy from 192.168.1.200 port 22 ssh2
+Apr 24 08:05:33 server sshd[1240]: Failed password for root from 45.33.32.156 port 22 ssh2
+Apr 24 08:06:10 server sudo: auth failure; logname=deploy uid=0 euid=0 tty=/dev/pts/0
+Apr 24 08:07:45 server sshd[1241]: Accepted password for ubuntu from 192.168.1.200 port 22 ssh2
+Apr 24 08:10:02 server sshd[1242]: Failed password for invalid user test from 185.220.101.5 port 22 ssh2
+Apr 24 08:11:55 server sshd[1243]: Failed password for invalid user guest from 185.220.101.5 port 22 ssh2
+Apr 24 08:15:00 server sshd[1244]: Accepted password for root from 192.168.1.1 port 22 ssh2
+Apr 24 09:00:01 server sshd[1300]: Failed password for root from 103.21.244.0 port 22 ssh2
+Apr 24 09:01:44 server sudo: auth failure; logname=ubuntu uid=1000 euid=0 tty=/dev/pts/1
+Apr 24 09:05:12 server sshd[1310]: Failed password for root from 103.21.244.0 port 22 ssh2
+Apr 24 09:10:00 server sshd[1320]: Accepted password for deploy from 10.0.0.5 port 22 ssh2
+Apr 24 10:00:00 server sshd[1400]: Failed password for root from 222.186.42.117 port 22 ssh2

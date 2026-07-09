@@ -1,76 +1,204 @@
-# CLI Tabanlı Log Analiz ve Uyarı Aracı
+# CLI Log Analizi ve Uyarici Araci
 
-Bu proje, siber güvenlik uzmanlarının ve siber güvenlik meraklılarının, belirlediği log dosyalarını analiz edebilmeleri için tasarlanmış CLI tabanlı log analizi ve uyarı aracıdır.
+Terminal tabanli, kural destekli log analiz aracidir. Tek bir log dosyasini analiz edebilir, CSV rapor uretebilir ve `plugins/` klasorundeki eklentileri otomatik yukleyerek menuyu genisletebilir.
 
-## Uygulama Görüntüleri
+Bu surumde ana uygulamaya plugin mimarisi ve `Gercek Zamanli Veri Isleme` plugini eklendi. Plugin buyuk log dosyalarini RAM'e almadan satir satir isler, kategori/kelime filtresi uygular, eslesen olaylari canli panelde gosterir ve CSV olarak `outputs/` klasorune yazar.
 
-### 1. Ana Menü ve Kullanıcı Arayüzü
-Uygulama, kullanıcı dostu bir TUI (Terminal User Interface) ile açılır.
-![Ana Menü](screenshots/menu.png)
+## Ozellikler
 
-### 2. Detaylı Log Analiz Raporu
-Tekli veya toplu analizlerde tüm kategoriler ile eşleşen veriler ve aynı zamanda kategorize edilemeyen tüm veriler sunulur.
-![Analiz Sonuçları](screenshots/bulk_analysis.png)
+- `rules.json` uzerinden keyword, kategori ve etiket bazli log eslestirme
+- Tekli dosya analizi ve kategori bazli ozet tablo
+- CSV rapor ciktilari (`outputs/rapor_<tarih>.csv`)
+- Otomatik plugin kesfi (`plugins/*.py`)
+- Buyuk loglar icin streaming dosya tarama modu
+- Dosya sonundan canli izleme modu
+- Kategori filtresi (`KRITIK,HATA` gibi)
+- Ek kelime filtresi
+- Rich destekli terminal tablo/panel arayuzu
+- Docker ile tasinabilir calisma ortami
 
-### 3. Canlı Log İzleme (Real-time Tail)
-Bölünmüş ekran tasarımıyla anlık istatistikler ve log akışı takip edilebilir.
-![Canlı İzleme Paneli](screenshots/live_tail.png)
+## Proje Yapisi
 
-## Çalışma Mantığı (Architecture)
-Sistem üç temel katmandan oluşmaktadır:
-1. **Veri Toplama:** Python'ın `os.walk` ve `tail -f` metodları ile `/var/log` gibi girilen dosya yolu altındaki veriler okunur.
-2. **Analiz Motoru:** `rules.json` içinde tanımlanan anahtar kelimeler, her bir log satırı ile eşleştirilir. Anlık olarak canlı izleme veya stabil dosya, klasör analizi yapılır. 
-3. **Raporlama ve Uyarı:** Yakalanan bulgular `Rich` kütüphanesi ile TUI (Terminal User Interface) üzerinden kullanıcıya sunulur ve eş zamanlı olarak `outputs/` klasörüne kaydedilir.
-
-## Tespit Edilen Güvenlik Olayları
-Uygulama, varsayılan kural seti ile aşağıdaki kritik olayları anlık olarak raporlar:
-- **Web Saldırıları:** SQL Injection (`union select`), XSS (`<script>`), Directory Traversal.
-- **Sistem Sızmaları:** Başarısız SSH girişleri (`failed password`), Sudo yetki hataları.
-- **Adli Analiz:** SQLMap, Nmap gibi saldırgan araçlarının ayak izleri.
-- **Sistem Sağlığı:** Kernel panikleri, disk doluluk oranları, bellek yetersizliği hataları.
-
-## Raporlama Standartları
-Tüm analiz çıktıları, olay süreçlerine uygun olarak `outputs/` dizininde saklanır:
-- **Format:** CSV (Excel ve SIEM uyumlu)
-- **İsimlendirme:** `rapor_GG_AA_YYYY_SAAT.csv`
-- **Sütunlar:** Zaman, Kategori, Etiket, Dosya Yolu, Mesaj.
-
-## Yeni Kural Ekleme (Özelleştirme)
-Sistemin analiz kapasitesini artırmak için rules.json dosyasına dilediğiniz kadar yeni kural ekleyebilirsiniz. Her kural şu yapıda olmalıdır:
-
-```JSON
-{
-  "keyword": "log_içinde_aranacak_kelime",
-  "label": "Görünecek Uyarı Mesajı",
-  "kategori": "KRITIK, HATA, BILGI veya GUVENLIK"
-}
+```text
+.
+|-- main.py
+|-- rules.json
+|-- requirements.txt
+|-- Dockerfile
+|-- .dockerignore
+|-- plugins/
+|   `-- live_tail.py
+|-- logs/
+|   |-- buyuk_karma_akis.log
+|   |-- log1.txt
+|   |-- ssh_auth.log
+|   |-- system.log
+|   `-- web_access.log
+|-- screenshots/
+|   |-- bulk_analysis.png
+|   |-- live_tail.png
+|   `-- menu.png
+`-- outputs/
 ```
 
-## Docker Kullanımı
-Uygulamanın taşınabilirliğini sağlamak adına Docker imajı hazırlanmıştır.
+`outputs/` klasoru calisma sirasinda uretilen CSV raporlari icindir. `.gitignore` bu rapor dosyalarini repoya eklemez.
 
-### Kurulum (Build)
+## Yerel Python ile Calistirma
+
+Gereksinimler:
+
+- Python 3.11+
+- pip
+
+Kurulum:
+
 ```bash
-docker build -t cli-log-analizi-uyari-araci .
-```
-
-### Çalıştırma (Run)
-Sistem loglarına erişim yetkisiyle başlatmak için:
-```bash
-docker run -it --rm -v /var/log:/var/log cli-log-analizi-uyari-araci
-```
-
-## Yerel Çalıştırma Gereksinimleri
-Uygulamayı Docker olmadan, doğrudan kendi işletim sisteminizde çalıştırmak isterseniz aşağıdaki gereksinimleri karşılamanız yeterlidir:
-
-Python Sürümü: Python 3.10 veya üzeri.
-
-Bağımlılıkların Kurulumu: Proje klasöründeyken gerekli kütüphaneleri (Rich) yüklemek için şu komutu çalıştırın:
-
-```Bash
 pip install -r requirements.txt
 ```
 
-## 👤 Geliştirici
-- **Ad Soyad:** [Meriç Aytaş]
-- **Linkedin:** [https://www.linkedin.com/in/mericaytas/]
+Calistirma:
+
+```bash
+python main.py
+```
+
+Varsayilan menu:
+
+```text
+1. Tekli Dosya Analizi
+2. Gercek zamanli veri isleme - buyuk log akisini satir satir parse eder
+3. Cikis
+```
+
+## Docker ile Calistirma
+
+Image olusturma:
+
+```bash
+docker build -t log-analiz-cli .
+```
+
+Container calistirma:
+
+```bash
+docker run -it --rm log-analiz-cli
+```
+
+CSV raporlarini bilgisayardaki `outputs/` klasorune yazdirmak icin:
+
+PowerShell:
+
+```powershell
+docker run -it --rm -v "${PWD}/outputs:/app/outputs" log-analiz-cli
+```
+
+Linux/macOS:
+
+```bash
+docker run -it --rm -v "$(pwd)/outputs:/app/outputs" log-analiz-cli
+```
+
+## Tekli Dosya Analizi
+
+Menuden `1` secilir ve analiz edilecek log dosyasi girilir:
+
+```text
+Seciminiz: 1
+Dosya yolu: logs/log1.txt
+```
+
+Uygulama `rules.json` icindeki kurallara gore eslesen satirlari bulur, ekranda kategori ozetini gosterir ve CSV rapora yazar.
+
+## Gercek Zamanli Veri Isleme Plugini
+
+Menuden plugin secildiginde iki mod vardir:
+
+```text
+Seciminiz: 2
+Izlenecek/islenecek dosya: logs/buyuk_karma_akis.log
+Mod secin [1=mevcut dosyayi stream tara, 2=sondan canli izle] (varsayilan 2): 1
+Kategori filtresi (bos=hepsi, ornek: KRITIK,HATA): KRITIK,HATA
+Ek kelime filtresi (bos=hepsi):
+```
+
+Modlar:
+
+- `1`: Mevcut dosyayi bastan sona streaming olarak tarar.
+- `2`: Dosyanin sonuna gider ve yeni eklenen satirlari canli izler.
+
+Canli izleme modunu durdurmak icin `CTRL+C` kullanilir.
+
+## Plugin Mimarisi
+
+Uygulama acilisinda `plugins/` klasorundeki Python dosyalarini tarar. Bir dosyanin plugin olarak menuye eklenmesi icin su alanlari saglamasi gerekir:
+
+```python
+PLUGIN_NAME = "Plugin Adi"
+PLUGIN_DESC = "Menude gorunecek aciklama"
+
+def run(console, load_rules, save_to_csv):
+    ...
+```
+
+`run(...)` fonksiyonu ana uygulamadan su yardimcilari alir:
+
+- `console`: Rich console nesnesi
+- `load_rules`: `rules.json` kurallarini okuyan fonksiyon
+- `save_to_csv`: standart CSV raporuna satir ekleyen fonksiyon
+
+Bu yapi sayesinde ana menuyu degistirmeden yeni analiz modlari eklenebilir.
+
+## Kural Dosyasi
+
+Kurallar `rules.json` icinde tutulur:
+
+```json
+{
+  "keyword": "failed password",
+  "kategori": "GUVENLIK",
+  "label": "SSH basarisiz giris"
+}
+```
+
+Desteklenen varsayilan kategoriler:
+
+- `KRITIK`
+- `HATA`
+- `BILGI`
+- `GUVENLIK`
+
+## Ornek Loglar
+
+Repoda test icin hazir log dosyalari bulunur:
+
+| Dosya | Aciklama |
+| --- | --- |
+| `logs/log1.txt` | Temel tekli analiz ornegi |
+| `logs/web_access.log` | Web erisim ve hata loglari |
+| `logs/ssh_auth.log` | SSH giris denemeleri |
+| `logs/system.log` | Sistem ve servis loglari |
+| `logs/buyuk_karma_akis.log` | Streaming/canli analiz icin karma log akisi |
+
+## RAM'e Almadan Isleme Mantigi
+
+Plugin buyuk dosyalari `read()` veya `readlines()` ile bellekte toplamaz. Streaming modda dosya satir satir okunur:
+
+```python
+for line in handle:
+    process_line(line)
+```
+
+Canli izleme modunda dosyanin sonuna gidilir ve sadece yeni satirlar takip edilir:
+
+```python
+handle.seek(0, os.SEEK_END)
+line = handle.readline()
+```
+
+Ekranda yalnizca son 15 eslesme tutulur:
+
+```python
+recent_events = deque(maxlen=DISPLAY_LIMIT)
+```
+
+Bu nedenle log dosyasi buyuse bile uygulama tum icerigi RAM'e yuklemeden calisir.
